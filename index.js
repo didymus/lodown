@@ -298,7 +298,10 @@ module.exports.some = some;
  * @param {Array} array: The collection over which to iterate.
  * @param {Function} test: The Function to be applied to each value in the 
  * collection
- * @param {Number} seed: The fucking seed.
+ * @param {Number} seed: An accumulator. Carries the values from function to
+ *                      function. Best to start at 0 depending on the output of
+ *                      the test function, but if none is selected the seed will 
+ *                      start at array[0];
  */
 function reduce(array, test, seed) {
 for(let i = 0; i < array.length; i++){
