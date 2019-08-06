@@ -3,9 +3,10 @@
 // YOU KNOW WHAT TO DO //
 
 /**
- * identity: Designed to identify any value.
+ * identity: Designed to return the value unchanged.
  * 
- * @param {Any Value} value: Any value that you want to identify.
+ * @param {Any Value} value: Any <value> that you want returned unchanged.
+ * @returns {Same Value}: Returns <value> unchanged.
  */
 function identity(value) {
   return value;  
@@ -16,6 +17,16 @@ module.exports.identity = identity;
  * typeOf: Designed to return the data type of <value>.
  * 
  * @param {Any Value} value: Any value that you want the type of.
+ * @returns {String}: Returns the type of <value> as a string. 
+ * Types are one of:
+ *          - "string"
+ *          - "array"
+ *          - "object"
+ *          - "undefined"
+ *          - "number"
+ *          - "boolean"
+ *          - "null"
+ *          - "function"
  */
 function typeOf(value) {
    if(Array.isArray(value) === true){
@@ -30,10 +41,14 @@ function typeOf(value) {
 module.exports.typeOf = typeOf;
 
 /**
- * first: Designed to return the first <number> of values in <array>.
+ * first: Designed to return the first <number> of items in <array>.
  * 
  * @param {Array} array: The array you want to get the first values of.
  * @param {Number} number: The number of values you want to be returned.
+ * @returns {Array}: Returns the first <number> items of <array>. If <number>
+ * is not given or NaN returns first element. If <array> is not array returns
+ * an empty array. If <number> is negative returns empty array. If <number> is 
+ * greater than <array>.length returns the entire array.
  */
 function first(array, number) {
     if(Array.isArray(array) === false || number < 0){
@@ -54,6 +69,10 @@ module.exports.first = first;
  * 
  * @param {Array} array: The array you want to get the last values of.
  * @param {Number} number: The number of values you want to be returned.
+ * @returns {Array}: Returns the last <number> items of <array>. If <number>
+ * is not given or NaN returns last element. If <array> is not array returns [].
+ * If <number> is negative returns empty array. If <number> is greater than 
+ * <array>.length returns the entire array.
  */
 function last(array, number) {
     if(Array.isArray(array) === false || number < 0){
@@ -75,6 +94,8 @@ module.exports.last = last;
  * 
  * @param {Array} array: The array which contains the index you want.
  * @param {Any Value} value: The value in <array> you want the index of.
+ * @returns {Number}: Returns the index of <value>. Returns -1 if <value> is not
+ * in <array>.
  */
 function indexOf(array, value) {
     for(var i = 0; i < array.length; i++){
@@ -89,7 +110,8 @@ module.exports.indexOf = indexOf;
  * contains: Designed to return boolean value if <array> contains <value>.
  * 
  * @param {Array} array: The array in which to search.
- * @param {Any Value} value: The value you are looking for in <array>.
+ * @param {Any Value} value: The value you are looking for in <array>.{
+ * @returns {Boolean}: Returns true if <array> contains <value>, otherwise false.
  */
 function contains(array, value) {
     for(let i = 0; i < array.length; i++){
@@ -106,7 +128,8 @@ module.exports.contains = contains;
  * 
  * @param {Array or Object} collection: The collection over which to iterate.
  * @param {Function} action: The Function to be applied to each value in the 
- * collection
+ * collection.
+ * @returns <no return value>
  */
 function each(collection, action) {
     if(Array.isArray(collection)) {
@@ -126,6 +149,7 @@ module.exports.each = each;
  * duplicates removed.
  * 
  * @param {Array} array: The target array.
+ * @returns {Array}: Returns new array of <array> with all duplicates removed.
  */
 function unique(array) {
    const results = [];
@@ -146,6 +170,8 @@ module.exports.unique = unique;
  * @param {Array} array: The target array.
  * @param {Function} test: The Function to be applied to each value in the 
  * collection.
+ * @returns {Array}: Returns new array of elements from <array> for which 
+ * calling <function> returned true.
  */
 function filter(array, test) {
     let results = [];
@@ -165,6 +191,8 @@ module.exports.filter = filter;
  * @param {Array} array: The target array.
  * @param {Function} test: The Function to be applied to each value in the 
  * collection.
+ * @returns {Array}: Returns a new array of elements from <array> for which
+ * calling <function> returned false.
  */
 function reject(array, test) {
     let results = [];
@@ -179,7 +207,7 @@ module.exports.reject = reject;
 
 /**
  * partition: Designed to call <function> for each element in <array> and return
- *  an array that is made up of 2 sub arrays:
+ *  an array that is made up of 2 sub-arrays:
  *       0) An array that contains all the values for which <function> returned
  *          something truthy.
  *       1) An array that contains all the values for which <function> returned 
@@ -188,6 +216,9 @@ module.exports.reject = reject;
  * @param {Array} array: The target array.
  * @param {Function} test: The Function to be applied to each value in the 
  * collection.
+ * @returns {Array(s)}: Returns an array with 2 sub-arrays. One that contains all
+ * the values for which <function> returned something truthy. The other that
+ * contains all the values for which <function> returned something falsy.
  */
 function partition(array, test) {
      const trueArray = [];
@@ -213,6 +244,8 @@ module.exports.partition = partition;
  * @param {Array or Object} collection: The target collection.
  * @param {Function} test: The Function to be applied to each value in the 
  * collection.
+ * @returns {Array}: Returns an array of the return values of each <function>
+ * call. 
  */
 function map(collection, test) {
     const results = [];
@@ -232,10 +265,12 @@ module.exports.map = map;
 
 /**
  * pluck: Designed to return an array containing the value of <property> for 
- * every element in <array>.
+ *        every element in <array>.
  * 
  * @param {Array of Objects} collection: The collection over which to iterate.
  * @param {Any Value} property: The target key.
+ * @returns {Array}: Returns an array containing the value of <property> for 
+ *           every element in <array>.
  */
 function pluck(collection, property) {
     let results = map(collection, function(collection){
@@ -256,6 +291,10 @@ module.exports.pluck = pluck;
  * @param {Array or Object} collection: The target collection.
  * @param {Function} test: The Function to be applied to each value in the 
  * collection.
+ * @returns {Boolean}: Returns true if the return value of calling <function>
+ * for every element is true. Returns false if even one of them returns false.
+ * If <function> is not provided it returns true if every element is truthy,
+ * otherwise returns false.
  */
 function every(collection, test) {
   if(test === undefined){
@@ -276,6 +315,9 @@ module.exports.every = every;
  * @param {Array or Object} collection: The target collection.
  * @param {Function} test: The Function to be applied to each value in the 
  * collection.
+ * @returns {Boolean}: Returns true if the return value of calling <function> is
+ * at least true once. Returns false if the return value is false for all 
+ * elements.
  */
 function some(collection, test) {
     if(test === undefined){
@@ -302,6 +344,8 @@ module.exports.some = some;
  *                      function. Best to start at 0 depending on the output of
  *                      the test function, but if none is selected the seed will 
  *                      start at array[0];
+ * @returns {Number}: Returns the final result seed (accumulator)holds after 
+ * <function> is called for every element in <array>.
  */
 function reduce(array, test, seed) {
 for(let i = 0; i < array.length; i++){
@@ -323,6 +367,8 @@ module.exports.reduce = reduce;
  * 
  * @param {Object} object1: The source object.
  * @param {Object} ...objects: However many other objects.
+ * @returns {Object}: Returns <object 1> after all the properties of the other 
+ * <...objects> are copied to <object 1> in the order they are passed.
  */
 function extend(object1, ...objects) {
     return Object.assign(object1, ...objects);
